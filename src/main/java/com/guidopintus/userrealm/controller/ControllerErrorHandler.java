@@ -7,7 +7,6 @@ import com.guidopintus.userrealm.exception.RealmException;
 import com.guidopintus.userrealm.exception.RealmNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
-import org.springframework.core.env.EnvironmentCapable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -19,9 +18,9 @@ public class ControllerErrorHandler {
     @Autowired
     private Environment env;
 
-    @ExceptionHandler({RealmNotFoundException.class})
+    @ExceptionHandler(RealmNotFoundException.class)
     public ResponseEntity<ErrorDTO> handleNotFoundException(RealmNotFoundException ex) {
-        return buildResponse(ex,HttpStatus.BAD_REQUEST);
+        return buildResponse(ex,HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler({DuplicateRealmNameException.class})
