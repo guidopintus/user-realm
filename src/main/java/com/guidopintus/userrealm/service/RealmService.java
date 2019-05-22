@@ -1,20 +1,46 @@
 package com.guidopintus.userrealm.service;
 
+import com.guidopintus.userrealm.dao.RealmDAO;
 import com.guidopintus.userrealm.dto.AddRealmDTO;
 import com.guidopintus.userrealm.dto.RealmDTO;
 import com.guidopintus.userrealm.exception.RealmException;
 import com.guidopintus.userrealm.exception.RealmNotFoundException;
+import com.guidopintus.userrealm.model.RealmModel;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 @Service
-public class RealmService implements GetRealm,CreateRealm {
+public class RealmService implements GetRealm, CreateRealm {
+
+    @Autowired
+    RealmDAO realmDAO;
+
+    @Autowired
+    @Qualifier("realmKeyGen")
+    GenerateKey keyGen;
+
     @Override
-    public RealmDTO get(Integer id) throws RealmNotFoundException {
-        return new RealmDTO(1234,"realmName","realmDescription","key");
+    public RealmDTO get(Integer id) throws RealmException {
+
+
+        RealmModel realm = realmDAO.get(id);
+        if (realm == null) {
+            throw new RealmNotFoundException();
+        }
+        RealmDTO dto = new RealmDTO(realm.getId(), realm.getName(), realm.getDescription(), realm.getKey());
+        return dto;
     }
 
     @Override
     public RealmDTO create(AddRealmDTO addRealmDTO) throws RealmException {
-        return new RealmDTO(1234,"realmName","realmDescription","key");
+
+        String key = keyGen.getKey();
+        RealmModel realm = new RealmModel(null, addRealmDTO.getName(), addRealmDTO.getDescription(), key);
+
+        Integer id = realmDAO.add(realm);
+
+        return new RealmDTO(id, addRealmDTO.getName(), addRealmDTO.getDescription(), key);
+
     }
 }

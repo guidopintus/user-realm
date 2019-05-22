@@ -39,7 +39,7 @@ public class RealmControllerTests {
     private CreateRealm createRealmService;
 
     @Test
-    public void givenUserNotExists_whenRealmRetrieved_then404IsReceived() throws Exception, RealmNotFoundException {
+    public void givenUserNotExists_whenRealmRetrieved_then404IsReceived() throws Exception, RealmException {
 
         Integer mockId = 0;
         given(getRealmService.get(mockId)).willThrow(RealmNotFoundException.class);
@@ -51,7 +51,7 @@ public class RealmControllerTests {
 
 
     @Test
-    public void givenUserExists_whenUserRetrieved_thenUserReceivedJson() throws Exception, RealmNotFoundException {
+    public void givenUserExists_whenUserRetrieved_thenUserReceivedJson() throws Exception, RealmException {
 
         Integer mockId = 1234;
         RealmDTO dto = new RealmDTO(1234, "realmName", "realmDescription", "realmKey");
@@ -66,7 +66,7 @@ public class RealmControllerTests {
 
 
     @Test
-    public void givenUserExists_whenUserRetrieved_thenUserReceivedXml() throws Exception, RealmNotFoundException {
+    public void givenUserExists_whenUserRetrieved_thenUserReceivedXml() throws Exception, RealmException {
 
         Integer mockId = 1234;
         RealmDTO dto = new RealmDTO(1234, "realmName", "realmDescription", "realmKey");

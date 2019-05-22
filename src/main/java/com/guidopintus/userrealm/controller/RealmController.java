@@ -31,7 +31,7 @@ public class RealmController {
     @PostMapping( consumes = {MediaType.APPLICATION_JSON_VALUE,MediaType.APPLICATION_XML_VALUE}
             ,produces = {MediaType.APPLICATION_JSON_VALUE,MediaType.APPLICATION_XML_VALUE})
     public @ResponseBody RealmDTO addUser(@RequestBody AddRealmDTO addRealmDTO) throws RealmException{
-        return null;
+        return createRealm.create(addRealmDTO);
     }
 
 
