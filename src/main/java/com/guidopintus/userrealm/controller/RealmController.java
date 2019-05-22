@@ -2,6 +2,7 @@ package com.guidopintus.userrealm.controller;
 
 import com.guidopintus.userrealm.dto.AddRealmDTO;
 import com.guidopintus.userrealm.dto.RealmDTO;
+import com.guidopintus.userrealm.exception.RealmException;
 import com.guidopintus.userrealm.exception.RealmNotFoundException;
 import com.guidopintus.userrealm.service.CreateRealm;
 import com.guidopintus.userrealm.service.GetRealm;
@@ -23,13 +24,13 @@ public class RealmController {
     @GetMapping(value = "/{id}"
             ,produces = {MediaType.APPLICATION_JSON_VALUE,MediaType.APPLICATION_XML_VALUE})
 
-    public @ResponseBody RealmDTO getUser(@PathVariable Integer id) throws RealmNotFoundException {
+    public @ResponseBody RealmDTO getUser(@PathVariable Integer id) throws RealmException {
         return getRealm.get(id);
     }
 
     @PostMapping( consumes = {MediaType.APPLICATION_JSON_VALUE,MediaType.APPLICATION_XML_VALUE}
             ,produces = {MediaType.APPLICATION_JSON_VALUE,MediaType.APPLICATION_XML_VALUE})
-    public @ResponseBody RealmDTO addUser(@RequestBody AddRealmDTO addRealmDTO){
+    public @ResponseBody RealmDTO addUser(@RequestBody AddRealmDTO addRealmDTO) throws RealmException{
         return null;
     }
 
