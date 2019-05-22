@@ -49,4 +49,37 @@ public class RealmControllerTests {
                 .andExpect(status().isNotFound());
     }
 
+    @Test
+    public void givenUserExists_whenUserRetrieved_thenUserReceivedJson() throws Exception, RealmNotFoundException {
+
+        Integer mockId=1234;
+        RealmDTO dto=new RealmDTO(1234,"realmName","realmDescription","realmKey");
+        given(getRealmService.get(mockId)).willReturn(dto);
+        mvc.perform(get("/service/user/realm/"+mockId.toString()).accept(MediaType.APPLICATION_JSON_VALUE))
+                .andExpect(status().isOk())
+                .andExpect(content().json("{\n" +
+                        "\"id\": 1234,\n" +
+                        "\"name\": \"realmName\",\n" +
+                        "\"description\": \"realmDescription\",\n" +
+                        "\"key\": \"realmKey\"\n" +
+                        "}"));
+    }
+
+    @Test
+    public void givenUserExists_whenUserRetrieved_thenUserReceivedXml() throws Exception, RealmNotFoundException {
+
+        Integer mockId=1234;
+        RealmDTO dto=new RealmDTO(1234,"realmName","realmDescription","realmKey");
+        given(getRealmService.get(mockId)).willReturn(dto);
+        mvc.perform(get("/service/user/realm/"+mockId.toString()).accept(MediaType.APPLICATION_XML_VALUE))
+                .andExpect(status().isOk())
+                .andExpect(content().xml("<realm id=\"1234\" name=\"realmName\">\n" +
+                        "<description>realmDescription</description>\n" +
+                        "<key>realmKey</key>\n" +
+                        "</realm>"));
+    }
+
+
+
+
 }

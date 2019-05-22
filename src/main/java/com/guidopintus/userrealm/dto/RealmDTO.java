@@ -1,13 +1,22 @@
 package com.guidopintus.userrealm.dto;
 
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
+
 import javax.persistence.Id;
 
+@JacksonXmlRootElement(localName="realm")
 public class RealmDTO {
 
 
+
+    @JacksonXmlProperty(isAttribute = true)
     private final Integer id;
+    @JacksonXmlProperty(isAttribute = true)
     private final String name;
+    @JacksonXmlProperty
     private final String description;
+    @JacksonXmlProperty
     private final String key;
 
 
